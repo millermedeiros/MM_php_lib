@@ -1,0 +1,8 @@
+# Map all URIs except those corresponding to existing files/directories to the handler
+RewriteEngine on
+RewriteCond %{DOCUMENT_ROOT}%{REQUEST_URI} !-d
+RewriteCond %{DOCUMENT_ROOT}%{REQUEST_URI} !-f
+RewriteRule ^([\w-_\/]+)?$ ./index.php?path=$1
+
+# Block directory listing
+Options -Indexes

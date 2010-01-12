@@ -1,0 +1,1 @@
+Corrupted file just to test if server supports .htaccess files. Should throw Error 500 if working.
