@@ -6,8 +6,6 @@
  */
 class MMCompressor {
 	
-	//TODO: add compressJS method
-	
 	/**
 	 * Constructor - Static Class
 	 * @private
