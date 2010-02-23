@@ -2,7 +2,7 @@
 /**
  * Parse files and output minified version
  * @author Miller Medeiros
- * @version 0.1.2 (2009/12/09)
+ * @version 0.1.3 (2010/02/22)
  */
 class MMCompressor {
 	
@@ -37,15 +37,19 @@ class MMCompressor {
 	 * @param string $html_string	HTML string.
 	 * @param bool $preserve_comments [optional]	If it should preserve comments.
 	 * @param bool $preserve_linebreaks [optional]	If it should preserve line breaks.
+	 * @param bool $remove_multiple_spaces [optional]	If it should convert multiple spaces into single spaces.
 	 * @return string	Compressed HTML.
 	 */
-	public static function compressHTML($html_string, $preserve_comments = FALSE, $preserve_linebreaks = FALSE){
+	public static function compressHTML($html_string, $preserve_comments = FALSE, $preserve_linebreaks = FALSE, $remove_multiple_spaces = FALSE){
 		$output = preg_replace('/\t+/', '', $html_string);
 		if(! $preserve_comments){
 			$output = preg_replace('/<!--[\s\S]*-->/', '', $output); //strip comments
 		}
 		if(! $preserve_linebreaks){
 			$output = preg_replace('/\r|\n/', '', $output); //remove line breaks
+		}
+		if($remove_multiple_spaces){
+			$output = preg_replace('/ +/', ' ', $output); //convert multiple spaces into single spaces
 		}
 		return $output;
 	}

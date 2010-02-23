@@ -2,7 +2,7 @@
 /**
  * String utilities
  * @author Miller Medeiros
- * @version 0.2 (2009/12/18)
+ * @version 0.2.1 (2010/02/22)
  */
 class StringUtils {
 	
@@ -42,7 +42,7 @@ class StringUtils {
 		$output .= $default_title;
 		$output = preg_replace('/\-|\_/', ' ', $output);
 		$output = ucwords($output);
-		return $output;
+		return htmlentities($output);
 	}
 	
 	/**
