@@ -75,7 +75,7 @@ class FileUtils {
 		if(file_exists($file_path)){
 			
 			$mime_type = self::getMimeType($file_path);
-			$mime_type = ($mime_type)? $mime_type : 'application/octet-stream'; // sets default Mime-Type if Mime-Type is undefined
+			$mime_type = ($mime_type)? $mime_type : 'application/octet-stream'; // sets default Mime-Type if Mime-Type is FALSE
 			
 			$base_name = basename($file_path);
 			$file_size = filesize($file_path);
@@ -117,8 +117,8 @@ class FileUtils {
 		
 		/* == Custom built == */
 		
-		// Uncomplete list of Myme-Types copied from Wikipedia ( http://en.wikipedia.org/wiki/Internet_media_type )
-		$myme_types = array(
+		// Incomplete list of Mime-Types copied from Wikipedia ( http://en.wikipedia.org/wiki/Internet_media_type )
+		$mime_types = array(
 			//application
 			'exe' => 'application/octet-stream',
 			'pdf' => 'application/pdf',
@@ -178,7 +178,7 @@ class FileUtils {
 		preg_match('/[^\.]+$/', $file_path, $matches); //get file extension
 		
 		$file_extension = $matches[0];
-		$output = (array_key_exists($file_extension, $myme_types))? $myme_types[$file_extension] : FALSE;
+		$output = (array_key_exists($file_extension, $mime_types))? $mime_types[$file_extension] : FALSE;
 		
 		/* */
 		
