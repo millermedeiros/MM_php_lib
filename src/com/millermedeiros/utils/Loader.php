@@ -3,7 +3,7 @@
 /**
  * Helper Class to load (include) external files [static class]
  * @author Miller Medeiros
- * @version 0.1 (2009/12/17)
+ * @version 0.2 (2010/04/07)
  */
 class Loader {
 
@@ -11,10 +11,8 @@ class Loader {
 	
 	/**
 	 * Load external file and assign variables
-	 * XXX: maybe implement option to return the result as string instead of displaying it (not sure if needed since can use the output buffer for it outside the class).
-	 * TODO: implement basic templating system (probably just simple var replacements - no fancy loops).
 	 * @param string $file_path	Path to the desired file
-	 * @param array [$data]	Array or Object with data that should be passed to the loaded file [ex: $data = array('foo' => 'lorem', 'bar' => 'ipsum')]
+	 * @param array $data [optional]	Array or Object with data that should be passed to the loaded file [ex: $data = array('foo' => 'lorem', 'bar' => 'ipsum')]
 	 */
 	public static function load($file_path, $data = NULL){
 		if(isset($data)){
@@ -23,6 +21,23 @@ class Loader {
 			}
 		}
 		include $file_path;
+	}
+	
+	/**
+	 * Load Template File
+	 * - replace variables wrapped in '::' with the $data item with same key.  
+	 * TODO: add option to load Template files that contain PHP code and also option to set a custom delimiter for vars. 
+	 * @param string $file_path	Path to the desired file
+	 * @param array $data [optional]	Array or Object with data that should be passed to the loaded file [ex: $data = array('foo' => 'lorem', 'bar' => 'ipsum')]
+	 */
+	public static function loadTemplate($file_path, $data = NULL){
+		$output = file_get_contents($file_path);
+		if(isset($data)){
+			foreach($data as $key=>$value){
+				$output = preg_replace("/::$key::/", $value, $output); //replace everything between '::' with the proper value 
+			}
+		}
+		echo $output;
 	}
 	
 }
