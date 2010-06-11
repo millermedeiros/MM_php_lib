@@ -3,7 +3,7 @@
 /**
  * Helper Class to load (include) external files [static class]
  * @author Miller Medeiros
- * @version 0.4 (2010/05/12)
+ * @version 0.5 (2010/05/28)
  */
 class Loader {
 
@@ -27,7 +27,6 @@ class Loader {
 	 * Load Simple Template File
 	 * - only replace variables wrapped in '::' with the $data item with same key.
 	 * - if you need loops and conditionals just use regular PHP and set '$execute_php' to TRUE.
-	 * - don't use the loadTemplate method inside a template.
 	 * @param string $file_path	Path to the desired file
 	 * @param array $data [optional]	Array or Object with data that should be passed to the loaded file [ex: $data = array('foo' => 'lorem', 'bar' => 'ipsum')]
 	 * @param bool	$execute_php [optional]	If PHP code inside template should be executed.
@@ -43,7 +42,9 @@ class Loader {
 		
 		if(isset($data)){
 			foreach($data as $key=>$value){
-				$output = preg_replace("/::$key::/", $value, $output); //replace everything between '::' with the proper value 
+				if(is_string($value)){
+					$output = preg_replace("/::$key::/", $value, $output); //replace everything between '::' with the proper value
+				}
 			}
 		}
 		echo $output;
