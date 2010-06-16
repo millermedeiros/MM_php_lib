@@ -2,7 +2,7 @@
 /**
  * String utilities
  * @author Miller Medeiros
- * @version 0.4 (2010/05/29)
+ * @version 0.5 (2010/06/16)
  */
 class StringUtils {
 	
@@ -38,11 +38,15 @@ class StringUtils {
 	 * @param string $text	Subject
 	 * @param int $max_chars [optional]	Maximum number of chars (excluding $append)
 	 * @param string $append [optional]	String to be appended at the end of cropped string if string is bigger than $max_chars.
+	 * @param bool $string_html_tags [optional]	If it should remove any HTML tags from the string.
 	 * @return string	Cropped string
 	 */
-	public static function crop($text, $max_chars = 125, $append = '&hellip;'){
+	public static function crop($text, $max_chars = 125, $append = '&hellip;', $strip_html_tags = TRUE){
 		if(strlen($text) <= $max_chars){
 			return $text;
+		}
+		if($strip_html_tags){
+			$text = self::stipHTMLTags($text);
 		}
 		$output = substr($text, 0, $max_chars);
 		$output = substr($output, 0, strrpos($output, ' ')); //crop at last space char
@@ -50,9 +54,20 @@ class StringUtils {
 	}
 	
 	/**
+	 * Removes everything enclosed by '<' and '>'
+	 * - ported from Miller Medeiros Eclipse Monkey stripHTMLtags script
+	 * @param string $str
+	 * @return string	Formated string
+	 */
+	public static function stipHTMLTags($str){
+		return preg_replace('/<[^>]*>/', '', $str); //removes everything enclosed by '<' and '>'
+	}
+	
+	/**
 	 * Replace spaces with hyphens and remove special chars
 	 * - ported from Miller Medeiros Eclipse Monkey hyphenate script
 	 * @param string $text
+	 * @return string	Formated string
 	 */
 	public static function hyphenate($str){
 		$str = preg_replace('/[^0-9a-zA-Z\xC0-\xFF \-]/', '', $str); //remove non-word chars
